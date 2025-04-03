@@ -14,7 +14,7 @@ SwadhSutra is a **CrewAI-powered generative AI recipe builder** that helps users
 
 - **Frontend**: React.js
 - **Backend**: FastAPI
-- **Database**: MongoDB
+- **Database**: MongoDB(still in progress)
 - **AI Model**: CrewAI Generative AI
 
 ## Installation
