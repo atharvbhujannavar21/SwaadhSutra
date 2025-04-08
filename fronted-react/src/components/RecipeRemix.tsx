@@ -148,7 +148,7 @@ const RecipeRemix = () => {
                       <div key={idx}>{item.trim()}</div>
                     ))}
                   </span>
-                  <span className="text-sm text-gray-500">Tap to view recipe →</span>
+                  <span className="text-sm text-gray-500">Tap to view recipes →</span>
                 </div>
               </div>
             ))}
