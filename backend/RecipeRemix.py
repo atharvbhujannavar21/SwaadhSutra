@@ -3,11 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from crewai import Crew, Agent, Task
 from markdown import markdown
-from dotenv import load_dotenv
 import os
-load_dotenv()
 
-groq_api_key = os.getenv("GROQ_API_KEY")
+os.environ["GROQ_API_KEY"] = "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"
+
 app = FastAPI()
 
 app.add_middleware(
