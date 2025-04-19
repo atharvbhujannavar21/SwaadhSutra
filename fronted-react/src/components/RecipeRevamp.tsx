@@ -1,16 +1,27 @@
-
 import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Edit3, Plus } from "lucide-react";
+import { Edit3, Plus, Loader2 } from "lucide-react";
+import axios from "axios";
 
 const RecipeRevamp = () => {
   const [recipe, setRecipe] = useState("");
+  const [revamped, setRevamped] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleRevampRecipe = () => {
-    // TODO: Implement AI recipe improvement suggestions
-    console.log("Revamping recipe:", recipe);
+  const handleRevampRecipe = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/revamp-recipe", {
+        recipe,
+      });
+      setRevamped(response.data.revamped_recipe);
+    } catch (error) {
+      console.error("Error revamping recipe:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -45,11 +56,28 @@ const RecipeRevamp = () => {
             </div>
             <Button 
               onClick={handleRevampRecipe}
+              disabled={loading}
               className="w-full bg-primary hover:bg-primary-dark text-secondary"
             >
-              <Plus className="h-5 w-5" />
-              Get Improvement Suggestions
+              {loading ? (
+                <>
+                  <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                  Revamping...
+                </>
+              ) : (
+                <>
+                  <Plus className="h-5 w-5 mr-2" />
+                  Get Improvement Suggestions
+                </>
+              )}
             </Button>
+
+            {revamped && (
+              <div
+                className="prose max-w-none mt-6 bg-white p-4 rounded-lg border border-primary/10"
+                dangerouslySetInnerHTML={{ __html: revamped }}
+              />
+            )}
           </CardContent>
         </Card>
       </div>
