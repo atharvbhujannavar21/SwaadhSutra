@@ -82,4 +82,8 @@ async def generate_recipe(req: IngredientRequest):
             "instructions": html_recipe  # Now properly formatted for web
         })
 
+<<<<<<< HEAD
     return {"recipes": recipes}
+=======
+    return {"recipes": recipes}
+>>>>>>> 0398673ea912f081552fbf9d1bb9e3b1aeebc3e0
