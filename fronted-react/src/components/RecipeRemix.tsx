@@ -134,26 +134,30 @@ const RecipeRemix = () => {
         </Card>
 
         {recipes.length > 0 && !selectedRecipe && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mt-10">
-            {recipes.map((recipe, index) => (
-              <div
-                key={index}
-                onClick={() => setSelectedRecipe(recipe)}
-                className="cursor-pointer bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transform transition-transform duration-200 hover:-translate-y-1 border border-primary/20 glass-effect"
-              >
-                <div className="flex flex-col items-center justify-center text-center space-y-2">
-                  <span className="text-2xl font-bold text-[#ED9455]">
-                    {/* Fix: Split titles like "1. Dish, 2. Dish" */}
-                    {recipe.title.split(/,\s*\d+\.\s*/).map((item: string, idx: number) => (
-                      <div key={idx}>{item.trim()}</div>
-                    ))}
-                  </span>
-                  <span className="text-sm text-gray-500">Tap to view recipe →</span>
-                </div>
-              </div>
-            ))}
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mt-10">
+    {recipes.map((recipe, index) => {
+      // Split titles using a robust regex: matches "1. Title", "2. Title", etc.
+      const titles = recipe.title.match(/\d+\.\s[^(\d+\.)]+/g) || [recipe.title];
+
+      return titles.map((title: string, idx: number) => (
+        <div
+          key={`${index}-${idx}`}
+          onClick={() => setSelectedRecipe(recipe)}
+          className="cursor-pointer bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transform transition-transform duration-200 hover:-translate-y-1 border border-primary/20 glass-effect"
+        >
+          <div className="flex flex-col items-center justify-center text-center space-y-2">
+                <span className="text-2xl font-bold text-[#ED9455]">
+        {title.replace(/,$/, '').trim()}
+      </span>
+
+            <span className="text-sm text-gray-500">Tap to view recipe →</span>
           </div>
-        )}
+        </div>
+      ));
+    })}
+  </div>
+)}
+
 
         {selectedRecipe && (
           <Card className="max-w-3xl mx-auto mt-8 glass-effect">
@@ -191,4 +195,4 @@ const RecipeRemix = () => {
   );
 };
 
-export default RecipeRemix;
+export default RecipeRemix;  

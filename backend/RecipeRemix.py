@@ -4,14 +4,14 @@ from pydantic import BaseModel
 from crewai import Crew, Agent, Task
 from markdown import markdown
 import os
-
+# python -m uvicorn RecipeRemix:app --reload
 os.environ["GROQ_API_KEY"] = "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"
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8080"],
+    allow_origins=["http://localhost:8080", "http://localhost:8080/remix"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -82,8 +82,4 @@ async def generate_recipe(req: IngredientRequest):
             "instructions": html_recipe  # Now properly formatted for web
         })
 
-<<<<<<< HEAD
     return {"recipes": recipes}
-=======
-    return {"recipes": recipes}
->>>>>>> 0398673ea912f081552fbf9d1bb9e3b1aeebc3e0

@@ -10,15 +10,26 @@ const RecipeRevamp = () => {
   const [revamped, setRevamped] = useState("");
   const [loading, setLoading] = useState(false);
 
+  interface RevampResponse {
+    revamped_recipe: string;
+  }
+
   const handleRevampRecipe = async () => {
     setLoading(true);
     try {
-      const response = await axios.post("http://127.0.0.1:8000/revamp-recipe", {
-        recipe,
-      });
+      const response = await axios.post(
+        "/api/revamp-recipe",  // Using the proxy path
+        { recipe },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       setRevamped(response.data.revamped_recipe);
     } catch (error) {
       console.error("Error revamping recipe:", error);
+      setError("Failed to revamp recipe. Please try again.");
     } finally {
       setLoading(false);
     }
