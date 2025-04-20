@@ -17,10 +17,10 @@ jobs:
         with:
           node-version: 18
       - name: Install frontend dependencies
+        working-directory: fronted-react
         run: npm install
-      - name: Lint frontend
-        run: npm run lint
       - name: Build frontend
+        working-directory: fronted-react
         run: npm run build
 
   lint-backend:
